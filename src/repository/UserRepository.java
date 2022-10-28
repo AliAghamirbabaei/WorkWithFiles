@@ -3,6 +3,9 @@ package repository;
 import model.User;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +15,8 @@ public class UserRepository {
     private static final String FILE_PATH = "database.txt";
 
     public UserRepository() {
-        readObjectFromFile();
+        //readObjectFromFile();
+        readLinesFromFile();
     }
 
     public void add(User user) {
@@ -25,7 +29,8 @@ public class UserRepository {
     }
 
     public void save() {
-        writeObjectToFile();
+        //writeObjectToFile();
+        writeLinesToFile();
     }
 
     public void writeObjectToFile() {
@@ -51,6 +56,31 @@ public class UserRepository {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+    }
+
+    public void writeLinesToFile() {
+        try {
+            FileOutputStream fos = new FileOutputStream(FILE_PATH);
+            OutputStreamWriter osw = new OutputStreamWriter(fos);
+            for (User user: arrayList) {
+                osw.write(user.getName()+"\n");
+            }
+            osw.close();
+            fos.close();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void readLinesFromFile() {
+        try {
+            List<String> lines = Files.readAllLines(Paths.get(FILE_PATH));
+            for (String line: lines) {
+                arrayList.add(new User(line));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
