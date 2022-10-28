@@ -20,6 +20,7 @@ public class UserRepository {
     }
 
     public List<User> getAll() {
+
         return arrayList;
     }
 

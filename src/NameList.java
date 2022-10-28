@@ -32,17 +32,36 @@ public class NameList {
                 }
             }
         };
+
         MenuController menuController = new MenuController(menuCallback);
         menuController.show();
     }
 
     private static void addUser() {
-        System.out.println("Enter a user name:");
-        String userName = scanner.nextLine();
-        userRepository.add(new User(userName));
+        System.out.println("Enter any number of user names separated with enter:");
+        String userName;
+        do {
+             userName = scanner.nextLine();
+            if(!userName.equals("back")) {
+                userRepository.add(new User(userName));
+            }
+        } while (!userName.equals("back"));
     }
 
     private static void getAllUsers() {
         System.out.println(userRepository.getAll());
     }
+
+//    private static void repeatUntil(String until, Action action) {
+//        String input;
+//        do {
+//            input = scanner.nextLine();
+//            if(!input.equals(until)) action.doAction(input);
+//        } while (!input.equals(until));
+//    }
+//
+//    interface Action {
+//        void doAction(String input);
+//    }
+
 }
