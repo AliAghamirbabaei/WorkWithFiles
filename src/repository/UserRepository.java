@@ -63,21 +63,28 @@ public class UserRepository {
         try {
             FileOutputStream fos = new FileOutputStream(FILE_PATH);
             OutputStreamWriter osw = new OutputStreamWriter(fos);
-            for (User user: arrayList) {
-                osw.write(user.getName()+"\n");
+            for (User user : arrayList) {
+                osw.write(user.getName() + "-" + user.getPhone()+"\n");
             }
             osw.close();
             fos.close();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void readLinesFromFile() {
         try {
-            List<String> lines = Files.readAllLines(Paths.get(FILE_PATH));
-            for (String line: lines) {
-                arrayList.add(new User(line));
+            if (new File(FILE_PATH).exists()) {
+                List<String> lines = Files.readAllLines(Paths.get(FILE_PATH));
+                String name;
+                String phone;
+                for (String line : lines) {
+                    String[] splited = line.split("-");
+                    name = splited[0];
+                    phone = splited[1];
+                    arrayList.add(new User(name, phone));
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

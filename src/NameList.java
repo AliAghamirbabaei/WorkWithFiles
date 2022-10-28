@@ -39,13 +39,14 @@ public class NameList {
 
     private static void addUser() {
         System.out.println("Enter any number of user names separated with enter:");
-        String userName;
+        String input;
         do {
-             userName = scanner.nextLine();
-            if(!userName.equals("back")) {
-                userRepository.add(new User(userName));
+            input = scanner.nextLine();
+            if(!input.equals("back")) {
+                String[] splited = input.split("-");
+                userRepository.add(new User(splited[0], splited[1]));
             }
-        } while (!userName.equals("back"));
+        } while (!input.equals("back"));
     }
 
     private static void getAllUsers() {
